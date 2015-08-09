@@ -7,4 +7,4 @@ http://jmcglone.com/guides/github-pages/
 
 view website at :
 
-http://username.github.io/
+http://julia-wrobel.github.io/
