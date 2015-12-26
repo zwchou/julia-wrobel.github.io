@@ -4,31 +4,57 @@ title: Interactive Map
 ---
 
 <head>
+<script
+src="http://maps.googleapis.com/maps/api/js">
+</script>
+
 <script>
+var myCenter=new google.maps.LatLng(40.8426,-73.9432);
+
 function initialize()
 {
   var mapProp = {
-    center: new google.maps.LatLng(40.8426,-73.9432),
-    zoom:15,
+    center: myCenter,
+    zoom:17,
+    panControl:true,
+    zoomControl:true,
+    mapTypeControl:true,
+    scaleControl:true,
+    streetViewControl:true,
+    overviewMapControl:true,
+    rotateControl:true,    
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
   var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+  poly = new google.maps.Polyline({
+    strokeColor: '#000000',
+    strokeOpacity: 1.0,
+    strokeWeight: 3 
+  });
+  poly.setMap(map);
+  map.addListener('click', addLatLng);
 }
 
-function loadScript()
-{
-  var script = document.createElement("script");
-  script.type = "text/javascript";
-  script.src = "http://maps.googleapis.com/maps/api/js?key=&sensor=false&callback=initialize";
-  document.body.appendChild(script);
+function addLatLng(event) {
+  var path = poly.getPath();
+
+  // Because path is an MVCArray, we can simply append a new coordinate
+  // and it will automatically appear.
+  path.push(event.latLng);
+
+  // Add a new marker at the new plotted point on the polyline.
+  var marker = new google.maps.Marker({
+    position: event.latLng,
+    title: '#' + path.getLength(),
+    map: map
+  });
 }
 
-window.onload = loadScript;
+google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 </head>
 
 <body>
-<div id="googleMap" style="width:500px;height:500px;"></div>
-
+<div id="googleMap" style="width:500px;height:380px;"></div>
 </body>
-
