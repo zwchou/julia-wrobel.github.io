@@ -4,14 +4,11 @@ title: Interactive Map
 ---
 
 <head>
-<script
-src="http://maps.googleapis.com/maps/api/js">
-</script>
+<script src="http://maps.googleapis.com/maps/api/js"> </script>
+<script type="text/javascript" src="customOptions.js"></script>
 
 <script>
 var myCenter=new google.maps.LatLng(40.8426,-73.9432);
-/*var myCenter=new google.maps.LatLng(43.05,-87.95);*/
-
 var poly;
 
 function initialize()
@@ -39,16 +36,6 @@ map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
   map.addListener('click', addLatLng);
 }
 
-
-function addLatLng(event) {
-  var path = poly.getPath();
-  path.push(event.latLng);
-
-  var marker = new google.maps.Marker({
-    position: event.latLng,
-    map: map,
-  });
-}
 
 google.maps.event.addDomListener(window, 'load', initialize);
 </script>
